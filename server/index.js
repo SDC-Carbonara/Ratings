@@ -1,5 +1,5 @@
 const express = require('express');
-const { test, jsonTest, joinTest, jsonBuild, metaQuery } = require('../database');
+const { test, jsonTest, joinTest, jsonBuild, reviewQuery,metaQuery } = require('../database');
 
 const app = express();
 const PORT = 3002;
@@ -7,7 +7,8 @@ const PORT = 3002;
 app.use(express.json());
 
 app.get('/reviews/meta', (req, res) => {
-  metaQuery()
+
+  metaQuery(req.query.product_id)
     .then((data) => {
       res.status(201).send(data.rows[0].json_build_object);
     })
@@ -17,9 +18,11 @@ app.get('/reviews/meta', (req, res) => {
 })
 
 
-app.get('/jsonBuild', (req, res) => {
-  console.log('hi');
-  jsonBuild()
+app.get('/reviews', (req, res) => {
+  // console.log(req.query);
+  // console.log([req.query.product_id, req.query.count])
+  // console.log(req.params);
+  reviewQuery(req.query)
     .then((data) => {
       res.status(201).send(data.rows[0].json_build_object)
     })
@@ -40,7 +43,7 @@ app.get('/jointest', (req, res) => {
 })
 
 app.get('/test', (req, res) => {
-
+  // console.log('test', test);
 
   test()
     .then((data) => {
