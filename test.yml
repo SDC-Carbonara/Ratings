@@ -1,0 +1,19 @@
+config:
+  target: "http://localhost:3002"
+  phases:
+    # - duration: 10
+    #   arrivalRate: 1
+    #   name: Warm up
+    - duration: 30
+      arrivalRate: 150
+      name: Sustaimed
+
+scenarios:
+  - name: "Get Products"
+    flow:
+      - get:
+          url: "/reviews?product_id={{$randomNumber(1,1000011)}}"
+  - name: "Get Products"
+    flow:
+      - get:
+          url: "/reviews/meta?product_id={{$randomNumber(1,1000011)}}"

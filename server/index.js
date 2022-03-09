@@ -8,6 +8,8 @@ app.use(express.json());
 
 app.get('/reviews/meta', (req, res) => {
 
+  // console.log(req.query);
+
   metaQuery(req.query.product_id)
     .then((data) => {
       res.status(201).send(data.rows[0].json_build_object);
