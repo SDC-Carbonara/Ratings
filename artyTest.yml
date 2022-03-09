@@ -1,0 +1,14 @@
+config:
+  target: "http://localhost:3002"
+  phases:
+    - duration: 10
+      arrivalRate: 1
+      name: Warm up
+
+scenarios:
+  - name: "Search and buy"
+    flow:
+      - get:
+          url: /test
+
+
