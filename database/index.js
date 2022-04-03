@@ -8,7 +8,7 @@ const client = new Client(pgconfig);
 client.connect();
 
 const select = `select * from reviews where review_id = 1`;
-const value = [5 ]
+const value = [5]
 
 const test = () => {
   return client.query(select);
@@ -84,39 +84,7 @@ const reviewsSelect =
       ) AS result_body`;
 
 
-//INEXPLICABLY I CANNOT USE A PREPARED STATEMENT FOR MY PRODUCT ID IN MY META QUERY SO I HAVE TO USE A TEMPLATE LITERAL WHYYYYYY????????
 
-
-
-
-//removed from query
-// SELECT json_object_agg
-// (c.name, (
-//   select json_object_agg(characteristics.name, row_to_json(characteristics)) from characteristics where product_id = 1)
-
-//   )  AS characteristics FROM characteristics c WHERE c.product_id = 1
-
-
-//     (select json_build_object(c.name, (select json_build_object('id', c.id, c.name, (select avg(value) from characteristic_reviews where characteristic_id = 5
-// )) from characteristics c where c.product_id = 65465 and c.name = 'Fit'))from characteristics c where c.product_id = 1)
-
-//tested in gui
-
-//     (select json_build_object(c.name, (select json_build_object('id', c.id, c.name, (select avg(value) from characteristic_reviews where characteristic_id = 5
-// )) from characteristics c where c.product_id = 65465 and c.name = 'Fit'))from characteristics c where c.product_id = 1)
-
-// worming in gui
-
-//not wormig
-
-// (
-//   SELECT json_object_agg
-//     (c.name, (
-//       SELECT name FROM characteristics WHERE product_id = 10)
-
-//       ) AS characteristics FROM characteristics c WHERE c.product_id = 10
-
-//     )
 
 const reviewQuery = (queryValues) => {
   let reviewValues = [parseInt(queryValues.product_id)];
@@ -134,9 +102,7 @@ const reviewQuery = (queryValues) => {
 }
 
 const metaQuery = (queryValues) => {
-  // let metaValues = [parseInt(queryValues.product_id)];
-  // let flooop = metaValues[0];
-  // console.log(queryValues)
+
 
   const metaSelect = `(SELECT json_build_object('product_id', ${queryValues} ,
 'ratings',
@@ -163,8 +129,7 @@ const metaQuery = (queryValues) => {
                      from characteristics c where c.product_id = $1)
     ))`;
 
-  // flooop = metaValues[0];
-  // console.log(metaValues, flooop)
+
   return pool.query(metaSelect, [queryValues]);
 }
 
@@ -182,7 +147,7 @@ module.exports = {
 
 
 
-
+//////////////////// QUERY GRAVEYARD ///////////////////////
 
 /*
 
@@ -253,7 +218,8 @@ module.exports = {
 // ` SELECT json_object_agg('richard',json_build_object
 // (rs.rating, (SELECT count(rating) FROM reviews AS rs WHERE rs.product_id = 37311 AND rating = rs.rating))  FROM reviews AS rs WHERE rs.product_id = 37311)
 
-
+// flooop = metaValues[0];
+  // console.log(metaValues, flooop)
 
 
 
@@ -264,5 +230,46 @@ module.exports = {
 //   'product_id', $1,
 //   'ratings', (SELECT json_agg(row_to_json(reviews)) from reviews WHERE product_id = $1)
 // ) FROM reviews WHERE product_id = $1
+
+
+
+
+
+
+//INEXPLICABLY I CANNOT USE A PREPARED STATEMENT FOR MY PRODUCT ID IN MY META QUERY SO I HAVE TO USE A TEMPLATE LITERAL WHYYYYYY????????
+
+ // let metaValues = [parseInt(queryValues.product_id)];
+  // let flooop = metaValues[0];
+  // console.log(queryValues)
+
+
+//removed from query
+// SELECT json_object_agg
+// (c.name, (
+//   select json_object_agg(characteristics.name, row_to_json(characteristics)) from characteristics where product_id = 1)
+
+//   )  AS characteristics FROM characteristics c WHERE c.product_id = 1
+
+
+//     (select json_build_object(c.name, (select json_build_object('id', c.id, c.name, (select avg(value) from characteristic_reviews where characteristic_id = 5
+// )) from characteristics c where c.product_id = 65465 and c.name = 'Fit'))from characteristics c where c.product_id = 1)
+
+//tested in gui
+
+//     (select json_build_object(c.name, (select json_build_object('id', c.id, c.name, (select avg(value) from characteristic_reviews where characteristic_id = 5
+// )) from characteristics c where c.product_id = 65465 and c.name = 'Fit'))from characteristics c where c.product_id = 1)
+
+// worming in gui
+
+//not wormig
+
+// (
+//   SELECT json_object_agg
+//     (c.name, (
+//       SELECT name FROM characteristics WHERE product_id = 10)
+
+//       ) AS characteristics FROM characteristics c WHERE c.product_id = 10
+
+//     )
 
 */
