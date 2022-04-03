@@ -6,6 +6,8 @@ const PORT = 3002;
 
 app.use(express.json());
 
+app.get('/loaderio-8cbbc4012e0a6930df0fc5d6b99b6943/')
+
 
 app.get('/reviews/meta', (req, res) => {
 
