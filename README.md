@@ -12,6 +12,10 @@ The second leg of the sprint was to upload my database to the cloud using AWS, a
 
 ## Images
 
+# Final Test, 3000 Requests per second (2 different endpoints @1500RPS each simultaneously)
+
+![](https://i.imgur.com/ekD8Eay.png)
+
 # All Seven AWS EC2 Instances open and running in sync
 ![](https://i.imgur.com/P5t4R4Z.png)
 
@@ -23,9 +27,6 @@ The second leg of the sprint was to upload my database to the cloud using AWS, a
 
 ## Loader.io load balancing tests
 
-# Final Test, 3000 Requests per second (2 different endpoints @1500RPS each simultaneously)
-
-![](https://i.imgur.com/ekD8Eay.png)
 
 # Other tests, increasing in efficiency
 ![](https://i.imgur.com/IQt28i1.png)
